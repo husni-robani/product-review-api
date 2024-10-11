@@ -11,13 +11,13 @@ use Illuminate\Http\JsonResponse;
 class ApiResponse implements Responsable
 {
     /** @var int  */
-    protected $httpCode;
+    protected int $httpCode;
     /** @var array  */
-    protected $data;
+    protected array $data;
     /** @var string  */
-    protected $errorMessage;
+    protected string $errorMessage;
     /** @var string  */
-    protected $message;
+    protected string $message;
 
     public function __construct(int $httpCode, array $data = [] , string $message = '', string $errorMessage = '')
     {
