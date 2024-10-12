@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreReviewRequest;
+use App\Http\Requests\Api\UpdateReviewRequest;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -45,5 +48,44 @@ class ReviewController extends Controller
         }
     }
 
+    /**
+     * @param StoreReviewRequest $request
+     * @return ApiResponse
+     */
+    public function store(StoreReviewRequest $request){
+        try {
+            $review = Review::create($request->validated());
+            ReviewResource::includeProduct(true);
+            return new ApiResponse(201, new ReviewResource($review), 'Create review successful!');
+        }catch (Exception){
+            return new ApiResponse(500);
+        }
+    }
+
+    public function update(UpdateReviewRequest $request, int $reviewId){
+        try {
+            $review = Review::findOrFail($reviewId);
+            if (! $review->update($request->validated())){
+                return new ApiResponse(400, errorMessage: 'Review update failed!');
+            }
+            return new ApiResponse(200, $review, 'Update review successful!');
+        }catch (ModelNotFoundException){
+            return new ApiResponse(404, errorMessage: 'Review not found!');
+        }catch (Exception){
+            return new ApiResponse(500);
+        }
+    }
+
+    public function destroy(Request $request, int $reviewId){
+        try{
+            $review = Review::findOrFail($reviewId);
+            $review->delete();
+            return new ApiResponse(200, message: 'Delete review successful!');
+        }catch (ModelNotFoundException){
+            return new ApiResponse('404', errorMessage: 'Review not found!');
+        }catch (Exception){
+            return new ApiResponse(500);
+        }
+    }
 
 }
