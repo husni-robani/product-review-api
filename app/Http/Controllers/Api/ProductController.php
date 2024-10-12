@@ -17,7 +17,6 @@ class ProductController extends Controller
     /**
      * This controller method handle the request that want to get the Product data
      * @return ApiResponse
-     * @throws Exception
      */
     public function allProducts(Request $request) {
         try {
@@ -32,7 +31,6 @@ class ProductController extends Controller
     /**
      * Search product from query string request
      * @return ApiResponse
-     * @throws Exception
      */
     public function searchProduct(Request $request){
         $query = Product::query();
@@ -54,7 +52,6 @@ class ProductController extends Controller
     /**
      * This function will create new product
      * @return ApiResponse
-     * @throws Exception
      */
     public function store(StoreProductRequest $request){
         try {
@@ -67,8 +64,6 @@ class ProductController extends Controller
 
     /**
      * This function will updating the selected product
-     * @throws Exception
-     * @throws ModelNotFoundException
      * @return ApiResponse
      */
     public function update(UpdateProductRequest $request, $productId){
@@ -87,8 +82,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @throws Exception
-     * @throws ModelNotFoundException
      * @return ApiResponse
      */
     public function destroy(Request $request, $productId){
