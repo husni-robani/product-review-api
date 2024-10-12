@@ -26,7 +26,7 @@ class ProductFactory extends Factory
     {
         return $this->afterCreating(function (Product $product) {
            Review::factory()->count(2)->create([
-               'productId' => $product->id
+               'product_id' => $product->id
            ]) ;
         });
     }
