@@ -10,7 +10,6 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -20,13 +19,12 @@ class ProductController extends Controller
      * @return ApiResponse
      * @throws Exception
      */
-    public function allProducts() {
+    public function allProducts(Request $request) {
         try {
             $products = ProductResource::collection(Product::with('reviews')->get());
             return new ApiResponse(200, $products, 'Get products successful!');
-        }catch (Exception $exception){
-            $response = new ApiResponse(500);
-            throw new Exception($response->toResponse($response));
+        }catch (Exception){
+            return new ApiResponse(500);
         }
     }
 
@@ -48,9 +46,8 @@ class ProductController extends Controller
         try {
             $result = $query->get();
             return new ApiResponse(200, ProductResource::collection($result));
-        }catch (Exception $exception){
-            $response = new ApiResponse(500);
-            throw new Exception($response->toResponse($request));
+        }catch (Exception){
+            return new ApiResponse(500);
         }
     }
 
@@ -63,15 +60,15 @@ class ProductController extends Controller
         try {
             $product = Product::create($request->validated());
             return new ApiResponse(201, new ProductResource($product), 'Create product successful!');
-        }catch (Exception $exception){
-            $response = new ApiResponse(500);
-            throw new Exception($response->toResponse($request));
+        }catch (Exception){
+            return new ApiResponse(500);
         }
     }
 
     /**
      * This function will updating the selected product
      * @throws Exception
+     * @throws ModelNotFoundException
      * @return ApiResponse
      */
     public function update(UpdateProductRequest $request, $productId){
@@ -81,13 +78,28 @@ class ProductController extends Controller
                 return new ApiResponse(400, errorMessage: 'Product update failed!');
             }
             return new ApiResponse(200, $product, 'Update product successful!');
-        }catch (ModelNotFoundException $exception){
-            $response = new ApiResponse(404, errorMessage: 'Product not found!');
-            throw new ModelNotFoundException($response->toResponse($request));
+        }catch (ModelNotFoundException){
+            return new ApiResponse(404, errorMessage: 'Product not found!');
         }
-        catch (Exception $exception){
-            $response = new ApiResponse(500);
-            throw new Exception($response->toResponse($request));
+        catch (Exception){
+            return new ApiResponse(500);
+        }
+    }
+
+    /**
+     * @throws Exception
+     * @throws ModelNotFoundException
+     * @return ApiResponse
+     */
+    public function destroy(Request $request, $productId){
+        try {
+            $product = Product::findOrFail($productId);
+            $product->delete();
+            return new ApiResponse(200, message: "Delete product successful");
+        }catch (ModelNotFoundException){
+            return new ApiResponse(404, errorMessage: 'Product not found!');
+        }catch (Exception){
+            return new ApiResponse(500);
         }
     }
 }
