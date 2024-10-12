@@ -2,19 +2,8 @@
 
 use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ReviewController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 
 Route::post('/auth', [AuthenticationController::class, 'authenticate'])->name('authenticate');
 
@@ -25,5 +14,13 @@ Route::middleware('api.auth')->group(function () {
         Route::post('/products', 'store');
         Route::patch('/products/{productId}', 'update');
         Route::delete('/products/{productId}', 'destroy');
+    });
+
+    Route::controller(ReviewController::class)->group(function() {
+        Route::get('/reviews', 'allReviews');
+        Route::get('/reviews/search', 'searchReview');
+        Route::post('/reviews', 'store');
+        Route::patch('/reviews/{reviewId}', 'update');
+        Route::delete('/reviews/{reviewId}', 'destroy');
     });
 });
