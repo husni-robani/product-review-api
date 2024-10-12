@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -33,13 +34,18 @@ class ProductController extends Controller
         }
         try {
             $result = $query->get();
-            return new ApiResponse(200, $result);
+            return new ApiResponse(200, ProductResource::collection($result));
         }catch (\Exception $exception){
             return new ApiResponse(500);
         }
     }
 
-    public function create(){
-
+    public function store(StoreProductRequest $request){
+        try {
+            $product = Product::create($request->validated());
+            return new ApiResponse(201, new ProductResource($product), 'Create product successful!');
+        }catch (\Exception $exception){
+            return new ApiResponse(500);
+        }
     }
 }
