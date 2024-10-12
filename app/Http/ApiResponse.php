@@ -14,12 +14,12 @@ class ApiResponse implements Responsable
     protected int $httpCode;
     /** @var array|\JsonSerializable  */
     protected array|\JsonSerializable $data;
-    /** @var string  */
-    protected string $errorMessage;
+    /** @var array|string  */
+    protected array|string $errorMessage;
     /** @var string  */
     protected string $message;
 
-    public function __construct(int $httpCode, array|\JsonSerializable $data = [] , string $message = '', string $errorMessage = '')
+    public function __construct(int $httpCode, array|\JsonSerializable $data = [] , string $message = '', array|string $errorMessage = [])
     {
         $this->httpCode = $httpCode;
         $this->data = $data;
