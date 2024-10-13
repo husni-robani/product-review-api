@@ -32,7 +32,13 @@ Tabel ini menyimpan informasi mengenai ulasan produk. Kolom-kolom dalam tabel in
 
 
 ## Screenshots
-<!-- Screen shoots -->
+1. Login
+![Screenshot 2024-10-13 at 22 13 01](https://github.com/user-attachments/assets/46626fa9-6ff0-4452-b7f4-d5a6112cc1fd)
+2. Products
+![Screenshot 2024-10-13 at 22 14 59](https://github.com/user-attachments/assets/63c9676c-0f29-4128-ada7-ef95c81bdd80)
+3. Reviews
+![Screenshot 2024-10-13 at 22 15 10](https://github.com/user-attachments/assets/6e6b42e0-82a7-4e03-bb1f-fc8ebe3c66a1)
+
 ## Dependencies
 
 ### Backend Dependencies
