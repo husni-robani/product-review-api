@@ -19,7 +19,7 @@ class AuthenticationController extends Controller
 
         $user = User::where('email', $request->get('email'))->first();
 
-        if (!$user || $request->get('password') != $user->password) {
+        if (!$user || !Hash::check($request->get('password'), $user->password)) {
             return new ApiResponse(401, errorMessage: 'Email or password is incorrect');
         }
 
