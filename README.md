@@ -1,64 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Product Review API
 
-## About Laravel
+Product Review API merupakan API services yang terdiri dari 11 endpoint untuk mengelola data Product dan Review yang saling berhubungan. Hampir keseluruhan endpoint memerlukan API token yang didapatkan melalui authentication endpoint.Meskipun inti dari project ini merupakan API services, namun terdapat admin panel juga yang memberikan gambaran secara langsung mengenai Data yang terdapat di dalam database.
+## Database Design
+![image](https://github.com/user-attachments/assets/8b717d14-cca2-403d-9469-82ca0e1d4962)
+1. Table users
+- id: tipe data int, berfungsi sebagai primary key yang unik untuk setiap user.
+- name: tipe data string, menyimpan nama user.
+- password: tipe data string, berfungsi sebagai kata sandi ketika login atau mendaptakan API Token
+- email: tipe data string, menyimpan email user.
+- createdAt: tipe data timestamp, menyimpan waktu kapan user tersebut dibuat.
+- updatedAt: tipe data timestamp, menyimpan waktu kapan user tersebut terakhir diperbarui.
+2. Tabel products 
+Tabel ini menyimpan informasi mengenai produk. Kolom-kolom dalam tabel ini meliputi:
+- id: tipe data int, berfungsi sebagai primary key yang unik untuk setiap produk.
+- name: tipe data string, menyimpan nama produk.
+- price: tipe data string, menyimpan harga produk.
+- createdAt: tipe data timestamp, menyimpan waktu kapan produk tersebut dibuat.
+- updatedAt: tipe data timestamp, menyimpan waktu kapan produk tersebut terakhir diperbarui.
+3. Tabel reviews 
+Tabel ini menyimpan informasi mengenai ulasan produk. Kolom-kolom dalam tabel ini meliputi:
+- id: tipe data int, berfungsi sebagai primary key yang unik untuk setiap ulasan.
+- review_text: tipe data text, menyimpan teks ulasan.
+- rate: tipe data enum, menyimpan nilai rating untuk produk (biasanya dalam bentuk angka atau kategori tertentu).
+- product_id: tipe data int, foreign key yang menghubungkan ulasan dengan produk terkait.
+- createdAt: tipe data timestamp, menyimpan waktu kapan ulasan tersebut dibuat.
+- updatedAt: tipe data timestamp, menyimpan waktu kapan ulasan tersebut terakhir diperbarui.
+## API Documentation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[API Documentation](https://giant-limpet-9b8.notion.site/Product-Review-API-11db98cf902d80ca8b65efcd0af3cd52)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Screenshots
+<!-- Screen shoots -->
+## Dependencies
 
-## Learning Laravel
+### Backend Dependencies
+- **Laravel** | [Documentation](https://laravel.com/docs)
+- **Sanctum** | [Documentation](https://laravel.com/docs)
+- **PHP** | [Documentation](https://www.php.net/docs.php)
+- **MySQL** | [Documentation](https://dev.mysql.com/doc/)
+- **Composer** | [Documentation](https://getcomposer.org/doc/)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Frontend Dependencies
+- **NPM** | [Documentation](https://docs.npmjs.com/)
+- **Tailwind CSS** | [Documentation](https://tailwindcss.com/docs/installation)
+- **Blade Template Engine** | [Documentation](https://tailwindcss.com/docs/installation)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Installation
+### Prerequisites
+Pastikan anda sudah install beberapa persyaratan berikut
+- PHP >= 8.0
+- Composer
+- MySQL
+- Node.js & NPM
+- webpack
+### Step by step
+1. Clone repository
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+git clone https://github.com/husni-robani/product-review-api.git
+cd my-project
+```
+2. Install Composer Dependencies
+```bash
+composer install
+```
+3. Install NPM Dependencies
+```bash
+npm install
+```
+4. copy env.example pada file .env untuk konfigurasi environtment
+```bash
+cp .env.example .env
+```
+5. Generate application key
+```bash
+php artisan key:generate
+```
+6. Setup Database pada file .env
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+```
+7. Jalankan migration dan seeder
+```bash
+php artisan migrate --seed
+```
+8. Build frontend assets
+```bash
+npm run dev
+```
+9. Jalankan aplikasi
+```bash
+php artisan serve
+```
